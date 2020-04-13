@@ -1,0 +1,40 @@
+void try();
+void try1 (int x);
+
+int main(){
+int x;
+int x = 3+(5-3)*7+20;
+float myFloat = 6.67;
+string myString = "asdsad";
+char myChar = "c";
+bool myBool = false;
+bool myBool2 = !myBool;
+if (x == 5) {
+	int y = 8;
+}
+for (int z = 0; z < 5; z=z+1) {
+	x = x+1;
+}
+while (z < 10) {
+	z = z+1;
+}
+switch (y) {
+	case 1:  
+		y=y+5;
+		break;
+	case 2:  
+		y=y+6;
+		break;
+	default:
+		y=y+7;
+		break;
+}
+
+return 0; 
+}
+void try1(int x)
+{
+    x=5;
+    return x; 
+}
+
