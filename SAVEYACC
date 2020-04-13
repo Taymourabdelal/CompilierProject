@@ -1,0 +1,62 @@
+%{
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdarg.h>
+    #include <string.h>
+
+    FILE * yyin;
+    void yyerror(char *);
+    int yylex(void);
+
+%}
+
+%token VALUE_INT VALUE_FLOAT OPERATOR_PLUS OPERATOR_MINUS OPERATOR_MULTIPLY OPERATOR_DIVIDE OPERATOR_OPENBRACKET OPERATOR_CLOSEDBRACKET GE LE EQ NE WHILE IF ELSE PRINT
+
+%%
+
+program : program statement { prtintf( "program : program statement \n\n");}
+        |                   { prtintf( "program : Epsilon \n\n");}
+        ;
+
+statement : expr   { prtintf( "statement : expr(%d) \n" , $1); $$=$1;}
+          |
+          ;
+
+expr:   VALUE_INT
+        | 
+        | expr OPERATOR_PLUS expr { $$ = $1 + $3; }
+        | expr OPERATOR_MINUS expr { $$ = $1 - $3; }
+        | expr OPERATOR_MULTIPLY expr { $$ = $1 * $3; }
+        | expr OPERATOR_DIVIDE expr { $$ = $1 / $3; }
+        | OPERATOR_OPENBRACKET expr OPERATOR_CLOSEDBRACKET { $$ = $2; }
+        ; 
+
+
+%%
+
+void yyerror (char *s) {
+
+    printf("%s\n" , s);
+}
+
+int main (void)
+{
+    yyin = fopen("testfile.txt","r+");
+    if (yyin == NULL)
+    {
+        pritnf ("File Not Found\n");
+    }
+    else{
+        printf (" >>>>> TEST FILE <<<<<< \n\n");
+        FILE *testFile; char ch;
+        testFile = fopen("testfile.txt" , "r");
+        while ((ch = fgetc(testFile)) != EOF)
+            printf("%c",ch);
+
+        printf("\n\n\n >>. Parsing <<<< \n\n");
+        yyparse();
+    }
+    fclose(yyin);
+    return 0;
+
+}
